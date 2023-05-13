@@ -19,9 +19,9 @@ async function login(req, res) {
         username: Joi.string().required(),
         password: Joi.string().min(8).required(),
     });
-    console.log("username:pass: ",username, password)
+    console.log("username:pass: ", username, password)
 
-    const { error } = schema.validate({username, password});
+    const { error } = schema.validate({ username, password });
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
@@ -39,7 +39,8 @@ async function login(req, res) {
                     expiresIn: '1h'
                 })
                 return res.send({
-                    token
+                    token,
+                    role: 1
                 });
             }
         }
@@ -55,11 +56,15 @@ async function login(req, res) {
                     expiresIn: '1h'
                 })
                 return res.send({
-                    token
+                    token,
+                    role: 1
                 });
             }
         }
-        return res.status(400).send("Username or password is wrong");
+        return res.status(400).send({
+            error: "Username or password is wrong",
+            role: -1
+        });
     } catch (error) {
         console.error(error);
         res.status(500).send("Internal server error");

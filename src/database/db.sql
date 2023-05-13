@@ -27,6 +27,9 @@ create table kelas (
     kelas_jenjang int(2),
 );
 
+-- Real data
+INSERT INTO kelas (kelas_id, kelas_name, kelas_jenjang) VALUES 
+
 
 
 drop table students;
@@ -40,6 +43,9 @@ CREATE TABLE IF NOT EXISTS students (
     jenjangPendidikan INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
+
+
 -- Dummy Data
 INSERT INTO students (username, name, email, age, birthdate, password, jenjangPendidikan)
 VALUES 
