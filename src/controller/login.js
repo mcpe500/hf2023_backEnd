@@ -7,16 +7,25 @@ const { check } = require("../encrypt/encrypt");
 const JWT_SECRET = env.JWT_SECRET;
 
 async function login(req, res) {
+    console.log(req.body)
+    let { username, password } = req.body;
+    console.log(username)
+    console.log(username.value)
+    console.log(password)
+    console.log(password.value)
+    username = username.value;
+    password = password.value;
     const schema = Joi.object({
         username: Joi.string().required(),
         password: Joi.string().min(8).required(),
     });
-    const { error } = schema.validate(req.body);
+    console.log("username:pass: ",username, password)
+
+    const { error } = schema.validate({username, password});
     if (error) {
         return res.status(400).send(error.details[0].message);
     }
     try {
-        const { username, password } = req.body;
         console.log(username, password);
         const queryTeachers = 'SELECT * FROM teachers WHERE (username = ? or email = ?)';
         const [teachers, teachersMetadata] = await sequelize.query(queryTeachers, {

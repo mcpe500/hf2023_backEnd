@@ -7,7 +7,18 @@ const enkripsi = require("../encrypt/encrypt")
 
 async function registerGuru(req, res) {
     try {
-        const { username, email, name, password, confirm, birthdate, gelarTerakhir, kelasDiajar, jenjangDiajar } = req.body;
+        let { username, email, name, password, confirm, birthdate, gelarTerakhir, kelasDiajar, jenjangDiajar } = req.body;
+        username = username.value;
+        email = email.value;
+        name = name.value;
+        password = password.value;
+        confirm = confirm.value;
+        birthdate = birthdate.value;
+        gelarTerakhir = gelarTerakhir.value;
+        kelasDiajar = kelasDiajar.value;
+        jenjangDiajar = jenjangDiajar.value;
+
+
         const schema = Joi.object({
             username: Joi.string().required(),
             name: Joi.string().required(),
@@ -19,7 +30,7 @@ async function registerGuru(req, res) {
             kelasDiajar: Joi.number().required(),
             jenjangDiajar: Joi.number().required()
         });
-        const { error } = schema.validate(req.body);
+        const { error } = schema.validate({username, name, email, password, confirm, birthdate, gelarTerakhir, kelasDiajar, jenjangDiajar});
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
@@ -61,7 +72,16 @@ async function registerGuru(req, res) {
 
 async function registerStudent(req, res) {
     try {
-        const { username, name, email, birthdate, password, confirm, jenjangPendidikan } = req.body;
+        let { username, name, email, tanggalLahir, password, confirm, jenjangPendidikan } = req.body;
+        console.log(req.body)
+        username = username.value;
+        name = name.value;
+        email = email.value;
+        birthdate = tanggalLahir.value;
+        password = password.value;
+        confirm = confirm.value;
+        jenjangPendidikan = jenjangPendidikan.value;
+
         const schema = Joi.object({
             username: Joi.string().required(),
             password: Joi.string().min(8).required(),
@@ -71,7 +91,7 @@ async function registerStudent(req, res) {
             birthdate: Joi.date().required(),
             jenjangPendidikan: Joi.number().required(),
         });
-        const { error } = schema.validate(req.body);
+        const { error } = schema.validate({username, password, confirm, name, email, birthdate, jenjangPendidikan});
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
