@@ -24,17 +24,26 @@ VALUES
 create table kelas (
     kelas_id int primary key,
     kelas_name varchar(50) not null,
-    kelas_jenjang int(2),
+    kelas_jenjang int
 );
 
 -- Real data
 INSERT INTO kelas (kelas_id, kelas_name, kelas_jenjang) VALUES 
-
+(1,"",""),
+(2,"",""),
+(3,"",""),
+(4,"",""),
+(5,"",""),
+(6,"",""),
+(7,"",""),
+(8,"",""),
+(9,"","");
 
 
 drop table students;
 CREATE TABLE IF NOT EXISTS students (
-    username VARCHAR(100) PRIMARY KEY,
+    students_id int primary key,
+    username VARCHAR(100) unique NOT NULL,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     age INT,
@@ -47,27 +56,19 @@ CREATE TABLE IF NOT EXISTS students (
 
 
 -- Dummy Data
-INSERT INTO students (username, name, email, age, birthdate, password, jenjangPendidikan)
+INSERT INTO students (students_id, username, name, email, age, birthdate, password, jenjangPendidikan) 
 VALUES 
-    ('john_doe', 'John Doe', 'john_doe@example.com', 25, '1998-05-01', 'password123', 3),
-    ('jane_doe', 'Jane Doe', 'jane_doe@example.com', 28, '1993-03-12', 'password456', 4),
-    ('bob_smith', 'Bob Smith', 'bob_smith@example.com', 30, '1991-11-23', 'password789', 2),
-    ('alice_wong', 'Alice Wong', 'alice_wong@example.com', 22, '1999-08-07', 'passwordabc', 1);
+    (1, 'john_doe', 'John Doe', 'john.doe@example.com', 25, '1998-06-10', 'password123', 3),
+    (2, 'jane_smith', 'Jane Smith', 'jane.smith@example.com', 21, '2000-02-15', '123456', 2),
+    (3, 'jimmy_williams', 'Jimmy Williams', 'jimmy.williams@example.com', 19, '2002-12-05', 'pass123', 1),
+    (4, 'sara_johnson', 'Sara Johnson', 'sara.johnson@example.com', 27, '1994-10-22', 'test123', 4),
+    (5, 'adam_brown', 'Adam Brown', 'adam.brown@example.com', 22, '1999-08-17', '123test', 2);
 
 
--- CREATE TABLE data_siswa (
---    id SERIAL PRIMARY KEY,
---    nama_lengkap VARCHAR(255) NOT NULL,
---    tempat_lahir VARCHAR(255) NOT NULL,
---    tanggal_lahir DATE NOT NULL,
---    jenis_kelamin VARCHAR(10) NOT NULL,
---    alamat VARCHAR(255) NOT NULL,
---    nomor_telepon VARCHAR(20) NOT NULL,
---    email VARCHAR(255) NOT NULL,
---    riwayat_pendidikan TEXT,
---    riwayat_akademik TEXT,
---    data_keuangan TEXT,
---    data_kesehatan TEXT,
---    data_kepribadian TEXT,
---    kontak_darurat TEXT
--- );
+create table history_prompt(
+    id_prompt int primary key,
+    prompt text not null,
+    result text not null,
+    students_id int,
+    kelas_id int
+);
