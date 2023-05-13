@@ -30,7 +30,7 @@ async function registerGuru(req, res) {
             kelasDiajar: Joi.number().required(),
             jenjangDiajar: Joi.number().required()
         });
-        const { error } = schema.validate({username, name, email, password, confirm, birthdate, gelarTerakhir, kelasDiajar, jenjangDiajar});
+        const { error } = schema.validate({ username, name, email, password, confirm, birthdate, gelarTerakhir, kelasDiajar, jenjangDiajar });
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
@@ -72,15 +72,20 @@ async function registerGuru(req, res) {
 
 async function registerStudent(req, res) {
     try {
-        let { username, name, email, tanggalLahir, password, confirm, jenjangPendidikan } = req.body;
+        let { username, name, email, tanggalLahir, password, confirmPassword, jenjangPendidikan } = req.body;
         console.log(req.body)
         username = username.value;
         name = name.value;
         email = email.value;
-        birthdate = tanggalLahir.value;
+        let birthdate = tanggalLahir.value;
         password = password.value;
-        confirm = confirm.value;
-        jenjangPendidikan = jenjangPendidikan.value;
+        let confirm = confirmPassword.value;
+        const jenjang = {
+            "SD": 1,
+            "SMP": 2,
+            "SMA": 3
+        }
+        jenjangPendidikan = jenjang[jenjangPendidikan.value];
 
         const schema = Joi.object({
             username: Joi.string().required(),
@@ -91,7 +96,7 @@ async function registerStudent(req, res) {
             birthdate: Joi.date().required(),
             jenjangPendidikan: Joi.number().required(),
         });
-        const { error } = schema.validate({username, password, confirm, name, email, birthdate, jenjangPendidikan});
+        const { error } = schema.validate({ username, password, confirm, name, email, birthdate, jenjangPendidikan });
         if (error) {
             return res.status(400).send(error.details[0].message);
         }
