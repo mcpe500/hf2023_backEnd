@@ -14,6 +14,6 @@ router.post("/registerGuru", register.guru);
 router.post("/registerStudent", register.student);
 router.get("/dashboard", dashboard)
 router.post("/promptpage", promptpage)
-router.get("/test", gpt);
+router.post("/chat-bot", gpt);
 
 module.exports = router;
