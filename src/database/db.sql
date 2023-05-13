@@ -11,7 +11,7 @@ CREATE TABLE IF NOT EXISTS teachers (
     kelasDiajar int,
     created_at timestamp default current_timestamp
 );
--- Dummy daya
+-- Dummy data
 INSERT INTO teachers (username, name, email, age, birthdate, password, gelarTerakhir, jenjangDiajar, kelasDiajar)
 VALUES 
     ('teacher1', 'John Smith', 'john.smith@example.com', 30, '1992-06-15', 'password123', 'S.Pd', 1, 7),
