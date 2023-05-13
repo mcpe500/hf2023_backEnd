@@ -1,13 +1,7 @@
 const express = require('express')
 const Joi = require('joi');
-const { Sequelize, QueryTypes, DatabaseError } = require('sequelize');
-const jwt = require('jsonwebtoken');
 const app = express()
 const port = 3000
-const JWT_SECRET = "inibuathackfestuc2023"
-
-
-
 
 app.use(express.urlencoded({extended: true}));
 app.use(express.json({extended: true}));

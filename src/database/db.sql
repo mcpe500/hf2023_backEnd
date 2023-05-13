@@ -1,6 +1,6 @@
+drop table teachers;
 CREATE TABLE IF NOT EXISTS teachers (
-    id serial primary key,
-    username varchar(255) not null,
+    username varchar(255) not null primary key,
     name varchar(255) not null,
     email varchar(255) unique not null,
     age int check (age >= 18),
@@ -9,8 +9,10 @@ CREATE TABLE IF NOT EXISTS teachers (
     gelarTerakhir varchar(255) not null,
     jenjangDiajar integer,
     kelasDiajar int,
+    tier int default 1 check(tier >= 1 and tier <= 3),
     created_at timestamp default current_timestamp
 );
+
 -- Dummy data
 INSERT INTO teachers (username, name, email, age, birthdate, password, gelarTerakhir, jenjangDiajar, kelasDiajar)
 VALUES 
@@ -27,17 +29,25 @@ create table kelas (
 
 
 
-
-create table students (
-    id serial primary key,
-    name varchar(50) not null,
-    email varchar(100) unique not null,
-    age int check (age >= 18),
-    birthdate date check(birthdate <= current_date),
-    password varchar(100) not null,
-    jenjangPendidikan int(2),
-    created_at timestamp default current_timestamp
+drop table students;
+CREATE TABLE IF NOT EXISTS students (
+    username VARCHAR(100) PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    age INT,
+    birthdate DATE CHECK(birthdate <= CURRENT_DATE),
+    password VARCHAR(100) NOT NULL,
+    jenjangPendidikan INT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+-- Dummy Data
+INSERT INTO students (username, name, email, age, birthdate, password, jenjangPendidikan)
+VALUES 
+    ('john_doe', 'John Doe', 'john_doe@example.com', 25, '1998-05-01', 'password123', 3),
+    ('jane_doe', 'Jane Doe', 'jane_doe@example.com', 28, '1993-03-12', 'password456', 4),
+    ('bob_smith', 'Bob Smith', 'bob_smith@example.com', 30, '1991-11-23', 'password789', 2),
+    ('alice_wong', 'Alice Wong', 'alice_wong@example.com', 22, '1999-08-07', 'passwordabc', 1);
+
 
 -- CREATE TABLE data_siswa (
 --    id SERIAL PRIMARY KEY,
