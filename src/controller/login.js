@@ -3,6 +3,7 @@ const Joi = require("joi");
 const sequelize = require("../database/db");
 const jwt = require('jsonwebtoken');
 const env = require("../config/env.json");
+const { check } = require("../encrypt/encrypt");
 const JWT_SECRET = env.JWT_SECRET;
 
 async function login(req, res) {
@@ -17,32 +18,37 @@ async function login(req, res) {
     try {
         const { username, password } = req.body;
         console.log(username, password);
-        const queryTeachers = 'SELECT * FROM teachers WHERE username = ? AND password = ?';
+        const queryTeachers = 'SELECT * FROM teachers WHERE (username = ? or email = ?)';
         const [teachers, teachersMetadata] = await sequelize.query(queryTeachers, {
-            replacements: [username, password],
+            replacements: [username, username],
             type: sequelize.QueryTypes.SELECT,
         });
-        console.log(teachers)
-        if(teachers){
-            const token = jwt.sign(teachers,JWT_SECRET,{
-                expiresIn: '1h'
-            })
-            return res.send({
-                token
-            });
+        if (teachers) {
+            let isPasswordMatch = await check(password, teachers.password);
+            if (isPasswordMatch) {
+                const token = jwt.sign(teachers, JWT_SECRET, {
+                    expiresIn: '1h'
+                })
+                return res.send({
+                    token
+                });
+            }
         }
-        const queryStudents = 'SELECT * FROM students WHERE username = ? AND password = ?';
-        const [students, studentsMetadata] = await sequelize.query(queryStudents, {
-            replacements: [username, password],
+        const queryStudents = 'SELECT * FROM students WHERE (username = ? or email = ?)';
+        let [students, studentsMetadata] = await sequelize.query(queryStudents, {
+            replacements: [username, username],
             type: sequelize.QueryTypes.SELECT,
         });
-        if(students){
-            const token = jwt.sign(students,JWT_SECRET,{
-                expiresIn: '1h'
-            })
-            return res.send({
-                token
-            });
+        if (students) {
+            isPasswordMatch = await check(password, students.password);
+            if (isPasswordMatch) {
+                const token = jwt.sign(students, JWT_SECRET, {
+                    expiresIn: '1h'
+                })
+                return res.send({
+                    token
+                });
+            }
         }
         return res.status(400).send("Username or password is wrong");
     } catch (error) {
