@@ -7,16 +7,32 @@ const enkripsi = require("../encrypt/encrypt")
 
 async function registerGuru(req, res) {
     try {
-        let { username, email, name, password, confirm, birthdate, gelarTerakhir, kelasDiajar, jenjangDiajar } = req.body;
+        let { username, email, name, password, confirmPassword, tanggalLahir, gelar, pelajaran, jenjangPendidikan } = req.body;
+        let pel = {
+            "Matematika":1,
+            "IPA":2,
+            "IPS":3,
+            "Olahraga":4,
+            "Bahasa Indonesia":5,
+            "Bahasa Inggris":6,
+            "PKN":7,
+            "Sejarah":8,
+            "Kesenian":9
+        };
+        let jenjang = {
+            "SD":1,
+            "SMP":2,
+            "SMA":3
+        }
         username = username.value;
         email = email.value;
         name = name.value;
         password = password.value;
-        confirm = confirm.value;
-        birthdate = birthdate.value;
-        gelarTerakhir = gelarTerakhir.value;
-        kelasDiajar = kelasDiajar.value;
-        jenjangDiajar = jenjangDiajar.value;
+        let confirm = confirmPassword.value;
+        let birthdate = tanggalLahir.value;
+        let gelarTerakhir = gelar.value;
+        let kelasDiajar = pel[pelajaran.value];
+        let jenjangDiajar = jenjang[jenjangPendidikan.value];
 
 
         const schema = Joi.object({

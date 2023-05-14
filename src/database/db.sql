@@ -42,8 +42,8 @@ INSERT INTO kelas (kelas_id, kelas_name, kelas_jenjang) VALUES
 
 drop table students;
 CREATE TABLE IF NOT EXISTS students (
-    students_id int primary key,
-    username VARCHAR(100) unique NOT NULL,
+    students_id SERIAL PRIMARY KEY,
+    username VARCHAR(100) UNIQUE NOT NULL,
     name VARCHAR(255) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     age INT,
@@ -52,6 +52,7 @@ CREATE TABLE IF NOT EXISTS students (
     jenjangPendidikan INT,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
+
 
 
 
@@ -64,11 +65,11 @@ VALUES
     (4, 'sara_johnson', 'Sara Johnson', 'sara.johnson@example.com', 27, '1994-10-22', 'test123', 4),
     (5, 'adam_brown', 'Adam Brown', 'adam.brown@example.com', 22, '1999-08-17', '123test', 2);
 
-
+drop table history_prompt;
 create table history_prompt(
     id_prompt int primary key,
     prompt text not null,
     result text not null,
-    students_id int,
-    kelas_id int
+    students_id int not null,
+    kelas_id int not null
 );
