@@ -8,6 +8,7 @@ const JWT_SECRET = env.JWT_SECRET;
 
 // Testing
 async function dashboard(req,res){
+    
     let data = {
         username: "user1",
         nama:"namaorang1"

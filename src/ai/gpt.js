@@ -20,7 +20,8 @@ async function gpt(req, res) {
             console.log('Decoded token:', decoded);
         }
     });
-    let prompt = "jawab menggunakan bahasa indonesia "+req.body.prompt;
+    let prompt = req.body.prompt+", jawab menggunakan bahasa indonesia";
+    prompt = req.body.prompt;
     console.log(prompt)
     // prompt = "hello";
     let resp;

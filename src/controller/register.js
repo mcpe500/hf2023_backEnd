@@ -113,7 +113,7 @@ async function registerStudent(req, res) {
             jenjangPendidikan: Joi.number().required(),
         });
         const { error } = schema.validate({ username, password, confirm, name, email, birthdate, jenjangPendidikan });
-        if (error) {
+        if (error) { 
             return res.status(400).send(error.details[0].message);
         }
         if (password != confirm) {
